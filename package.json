@@ -9,10 +9,12 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@react-keycloak/web": "^3.4.0",
     "@react-router/node": "^8",
     "@react-router/serve": "^8",
     "axios": "^1.19.0",
     "isbot": "^5.1.36",
+    "keycloak-js": "^26.2.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router": "^8"

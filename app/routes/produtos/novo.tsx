@@ -8,7 +8,7 @@ export function meta() {
   return [{ title: "Novo produto - Catálogo Pro" }];
 }
 
-export async function action({ request }: Route.ActionArgs) {
+export async function clientAction({ request }: Route.ClientActionArgs) {
   const input = parseProdutoInput(await request.formData());
 
   try {

@@ -8,12 +8,12 @@ export function meta() {
   return [{ title: "Editar produto - Catálogo Pro" }];
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
+export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   const produto = await getProduto(Number(params.id));
   return { produto };
 }
 
-export async function action({ request, params }: Route.ActionArgs) {
+export async function clientAction({ request, params }: Route.ClientActionArgs) {
   const input = parseProdutoInput(await request.formData());
 
   try {
