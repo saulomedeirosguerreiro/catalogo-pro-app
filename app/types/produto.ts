@@ -6,3 +6,10 @@ export interface Produto {
   estoque: number;
   criadoEm: string;
 }
+
+export interface ProdutoInput {
+  nome: string;
+  descricao: string | null;
+  preco: number;
+  estoque: number;
+}
