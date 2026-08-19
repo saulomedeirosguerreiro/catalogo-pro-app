@@ -6,9 +6,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { ReactKeycloakProvider } from "@react-keycloak/web";
 
 import type { Route } from "./+types/root";
 import { Header } from "./components/Header";
+import { keycloak } from "./lib/keycloak";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -34,8 +36,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Header />
-        {children}
+        <ReactKeycloakProvider
+          authClient={keycloak}
+          initOptions={{ onLoad: "check-sso" }}
+        >
+          <Header />
+          {children}
+        </ReactKeycloakProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

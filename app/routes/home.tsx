@@ -12,7 +12,7 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export async function loader() {
+export async function clientLoader() {
   try {
     const produtos = await getProdutos();
     return { produtos, error: null as string | null };
@@ -25,7 +25,7 @@ export async function loader() {
   }
 }
 
-export async function action({ request }: Route.ActionArgs) {
+export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
   const id = Number(formData.get("id"));
   await deleteProduto(id);
@@ -149,8 +149,8 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       )}
 
       {!error && produtos.length > 0 && (
-        <div className="surface-card overflow-hidden">
-          <table className="w-full border-collapse text-left">
+        <div className="surface-card overflow-x-auto">
+          <table className="w-full min-w-[720px] border-collapse text-left">
             <thead>
               <tr className="border-b border-gray-200 bg-gray-50">
                 <th className="px-4 py-3 text-xs font-medium uppercase tracking-wide text-gray-500">

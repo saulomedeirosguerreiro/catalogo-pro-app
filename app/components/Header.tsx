@@ -1,11 +1,14 @@
-import { useNavigate } from "react-router";
+import { useKeycloak } from "@react-keycloak/web";
 
 export function Header() {
-  const navigate = useNavigate();
+  const { keycloak, initialized } = useKeycloak();
+
+  if (!initialized || !keycloak.authenticated) {
+    return null;
+  }
 
   function handleLogout() {
-    localStorage.removeItem("authToken");
-    navigate("/");
+    keycloak.logout();
   }
 
   return (
