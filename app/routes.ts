@@ -8,7 +8,9 @@ import {
 export default [
   layout("components/RequireAuth.tsx", [
     index("routes/home.tsx"),
-    route("produtos/novo", "routes/produtos/novo.tsx"),
-    route("produtos/:id/editar", "routes/produtos/editar.tsx"),
+    layout("components/RequireAdmin.tsx", [
+      route("produtos/novo", "routes/produtos/novo.tsx"),
+      route("produtos/:id/editar", "routes/produtos/editar.tsx"),
+    ]),
   ]),
 ] satisfies RouteConfig;
