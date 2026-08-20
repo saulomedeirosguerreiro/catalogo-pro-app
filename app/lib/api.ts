@@ -8,12 +8,6 @@ export const api = axios.create({
 api.interceptors.request.use(async (config) => {
   await keycloakReady;
 
-  try {
-    await keycloak.updateToken(30);
-  } catch {
-    return Promise.reject(new Error("Sessão expirada."));
-  }
-
   config.headers.Authorization = `Bearer ${keycloak.token}`;
   return config;
 });

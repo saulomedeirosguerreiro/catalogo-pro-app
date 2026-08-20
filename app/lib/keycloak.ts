@@ -6,19 +6,18 @@ export const keycloak = new Keycloak({
   clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
 });
 
-let markKeycloakReady: () => void;
-
-// Resolvido pelo onEvent do ReactKeycloakProvider quando o check-sso inicial
-// termina (com sucesso ou erro). Evita que requisições disparadas por
-// clientLoader/clientAction tentem usar o token antes da inicialização
-// terminar, o que causava um loop de redirecionamentos para o login.
-export const keycloakReady = new Promise<void>((resolve) => {
-  markKeycloakReady = resolve;
+// O ReactKeycloakProvider chama keycloak.init() internamente. Interceptamos
+// essa chamada só para reaproveitar a própria Promise que ela já retorna,
+// resolvida quando o check-sso realmente termina — sem precisar de nenhum
+// evento/callback adicional.
+const originalInit = keycloak.init.bind(keycloak);
+export const keycloakReady: Promise<boolean> = new Promise((resolve) => {
+  keycloak.init = (options) => {
+    const result = originalInit(options);
+    result.then(resolve).catch(() => resolve(false));
+    return result;
+  };
 });
-
-export function notifyKeycloakReady() {
-  markKeycloakReady();
-}
 
 export const ROLE_ADMIN = "admin";
 export const ROLE_USER = "user";
