@@ -3,7 +3,7 @@ import { Form, Link, redirect, useRevalidator, useSearchParams } from "react-rou
 import type { Route } from "./+types/home";
 import { Alert } from "~/components/Alert";
 import { useIsAdmin } from "~/hooks/useIsAdmin";
-import { hasRole, keycloak, ROLE_ADMIN } from "~/lib/keycloak";
+import { keycloak, ROLE_ADMIN } from "~/lib/keycloak";
 import { getProdutos, deleteProduto } from "~/services/produtos";
 import type { Produto } from "~/types/produto";
 
@@ -28,7 +28,7 @@ export async function clientLoader() {
 }
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
-  if (!hasRole(keycloak, ROLE_ADMIN)) {
+  if (!keycloak.hasResourceRole(ROLE_ADMIN)) {
     throw new Response("Acesso não autorizado.", { status: 403 });
   }
 

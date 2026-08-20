@@ -22,12 +22,3 @@ export function notifyKeycloakReady() {
 
 export const ROLE_ADMIN = "admin";
 export const ROLE_USER = "user";
-
-export function getResourceRoles(client: Keycloak): string[] {
-  const clientId = import.meta.env.VITE_KEYCLOAK_CLIENT_ID;
-  return client.tokenParsed?.resource_access?.[clientId]?.roles ?? [];
-}
-
-export function hasRole(client: Keycloak, role: string): boolean {
-  return getResourceRoles(client).includes(role);
-}

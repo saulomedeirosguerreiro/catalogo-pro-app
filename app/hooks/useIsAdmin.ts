@@ -1,7 +1,7 @@
 import { useKeycloak } from "@react-keycloak/web";
-import { hasRole, ROLE_ADMIN } from "~/lib/keycloak";
+import { ROLE_ADMIN } from "~/lib/keycloak";
 
 export function useIsAdmin() {
   const { keycloak } = useKeycloak();
-  return hasRole(keycloak, ROLE_ADMIN);
+  return keycloak.hasResourceRole(ROLE_ADMIN);
 }
