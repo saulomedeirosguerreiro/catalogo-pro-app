@@ -39,6 +39,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <ReactKeycloakProvider
           authClient={keycloak}
           initOptions={{ onLoad: "check-sso" }}
+          onEvent={(event) => {
+            if (event === "onAuthRefreshError") {
+              keycloak.login();
+            }
+          }}
         >
           <Header />
           {children}
