@@ -1,6 +1,6 @@
 import { redirect, Link } from "react-router";
 import type { Route } from "./+types/novo";
-import { keycloak, ROLE_ADMIN } from "~/lib/keycloak";
+import { API_CLIENT_ID, keycloak, ROLE_ADMIN } from "~/lib/keycloak";
 import { createProduto } from "~/services/produtos";
 import { parseProdutoInput } from "~/utils/produto-form";
 import { ProdutoForm } from "~/components/ProdutoForm";
@@ -10,7 +10,7 @@ export function meta() {
 }
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
-  if (!keycloak.hasResourceRole(ROLE_ADMIN)) {
+  if (!keycloak.hasResourceRole(ROLE_ADMIN, API_CLIENT_ID)) {
     throw new Response("Acesso não autorizado.", { status: 403 });
   }
 

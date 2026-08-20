@@ -22,3 +22,8 @@ export function notifyKeycloakReady() {
 
 export const ROLE_ADMIN = "admin";
 export const ROLE_USER = "user";
+
+// Client no Keycloak onde as roles admin/user são atribuídas (diferente do
+// client de login `keycloak.clientId`), por isso precisa ser passado
+// explicitamente para keycloak.hasResourceRole(role, API_CLIENT_ID).
+export const API_CLIENT_ID = import.meta.env.VITE_KEYCLOAK_API_CLIENT_ID;
