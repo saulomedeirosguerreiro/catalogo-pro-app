@@ -10,7 +10,7 @@ import { ReactKeycloakProvider } from "@react-keycloak/web";
 
 import type { Route } from "./+types/root";
 import { Header } from "./components/Header";
-import { keycloak } from "./lib/keycloak";
+import { keycloak, notifyKeycloakReady } from "./lib/keycloak";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -39,6 +39,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <ReactKeycloakProvider
           authClient={keycloak}
           initOptions={{ onLoad: "check-sso" }}
+          onEvent={(event) => {
+            if (event === "onReady" || event === "onInitError") {
+              notifyKeycloakReady();
+            }
+          }}
         >
           <Header />
           {children}
