@@ -41,7 +41,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <ReactKeycloakProvider
           authClient={keycloak}
-          initOptions={{ onLoad: "check-sso" }}
+          initOptions={{
+            // "check-sso" faz uma checagem silenciosa via iframe apontando
+            // pro Keycloak — mas o Keycloak, por padrão, bloqueia ser exibido
+            // num iframe de outra origem (Content-Security-Policy
+            // frame-ancestors 'self'), então esse iframe nunca carrega e a
+            // Promise do init() trava pra sempre. Como todas as rotas daqui
+            // já exigem login (RequireAuth), não há motivo pra checagem
+            // silenciosa: "login-required" redireciona a página inteira pro
+            // Keycloak direto, sem iframe nenhum — não trava.
+            onLoad: "login-required",
+          }}
           onEvent={(event) => {
             if (event === "onAuthRefreshError") {
               keycloak.login();
