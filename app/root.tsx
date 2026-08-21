@@ -11,6 +11,7 @@ import { ReactKeycloakProvider } from "@react-keycloak/web";
 import type { Route } from "./+types/root";
 import { Header } from "./components/Header";
 import { keycloak } from "./lib/keycloak";
+import "./lib/theme-init";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -22,7 +23,9 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    // Inter (victa) e Sora (diagonal-inc) carregadas juntas no bundle: um
+    // único build/deploy atende os dois tenants, sem lógica condicional aqui.
+    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sora:wght@400;500;600;700&display=swap",
   },
 ];
 

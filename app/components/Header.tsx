@@ -1,4 +1,5 @@
 import { useKeycloak } from "@react-keycloak/web";
+import { Logo } from "~/components/Logo";
 
 export function Header() {
   const { keycloak, initialized } = useKeycloak();
@@ -15,12 +16,10 @@ export function Header() {
   }
 
   return (
-    <header className="border-b border-gray-800 bg-gray-900">
+    <header className="border-b border-black/10 bg-primary">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <div className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-sm font-semibold text-gray-900">
-            CP
-          </span>
+          <Logo />
           <span className="text-base font-semibold text-white">
             Catálogo Pro
           </span>

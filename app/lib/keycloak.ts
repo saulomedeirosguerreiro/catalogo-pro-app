@@ -1,8 +1,13 @@
 import Keycloak from "keycloak-js";
+import { getCurrentTenant } from "./tenant-resolution";
+
+// O realm varia por tenant (resolvido pelo hostname); URL do Keycloak e
+// client id do front são genéricos de infra, replicados nos dois realms.
+const tenant = getCurrentTenant();
 
 export const keycloak = new Keycloak({
   url: import.meta.env.VITE_KEYCLOAK_URL,
-  realm: import.meta.env.VITE_KEYCLOAK_REALM,
+  realm: tenant.keycloakRealm,
   clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
 });
 
